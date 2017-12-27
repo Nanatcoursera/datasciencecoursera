@@ -50,3 +50,6 @@ ppp
 
 
 ```
+## Conclusion
+
+I build the model using random foreset and 10 fold cross validation. I expected the out of sample error is above 80%.
