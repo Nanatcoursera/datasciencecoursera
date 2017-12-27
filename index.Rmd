@@ -3,8 +3,7 @@ title: "Practical ML course project-Performance Analysis"
 author: "Nance"
 date: "December 27, 2017"
 output:
-  pdf_document: default
-  html_document: default
+  html_document: keep_md: true
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
