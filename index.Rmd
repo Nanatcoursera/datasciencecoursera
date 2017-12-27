@@ -1,0 +1,51 @@
+---
+title: "Practical ML course project-performance analysis"
+author: "Nance"
+date: "December 27, 2017"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## data cleaning: removing index,name, NA and empty columns
+
+```{r}
+data=read.csv("pml-training.csv")
+data=data[,-1]
+m=colnames(data[colSums(is.na(data)) == 0])
+data=data[,m]
+firstrow=data[1,]
+emptycols <- colSums(firstrow == "") == nrow(firstrow)
+data=data[!emptycols]
+data=data[,-1]
+
+```
+
+## build model using random forest with cross validation 
+
+```{r}
+library(ggplot2)
+library(caret)
+library(lattice)
+intrain=createDataPartition(y=data$classe,p=0.7,list=FALSE)
+training=data[intrain,]
+testing=data[-intrain,]
+rfmodel=train(classe~.,method="rf",trControl=trainControl(method = "cv", number = 10),data=training,ntree=1)
+pre=predict(rfmodel,testing)
+confusionMatrix(testing$classe,pre)
+
+```
+
+
+## Prediction
+
+```{r}
+data2=read.csv("pml-testing.csv")
+ccc=as.vector(colnames(data))
+data3=data2[,colnames(data2)%in%ccc]
+ppp=predict(rfmodel,data3)
+ppp
+
+
+```
