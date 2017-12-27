@@ -2,7 +2,9 @@
 title: "Practical ML course project-Performance Analysis"
 author: "Nance"
 date: "December 27, 2017"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -10,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## data cleaning: removing index,name, NA and empty columns
 
-```{r}
+```{r, echo=FALSE}
 data=read.csv("pml-training.csv")
 data=data[,-1]
 m=colnames(data[colSums(is.na(data)) == 0])
@@ -24,7 +26,7 @@ data=data[,-1]
 
 ## build model using random forest with cross validation 
 
-```{r}
+```{r, echo=FALSE}
 library(ggplot2)
 library(caret)
 library(lattice)
@@ -40,7 +42,7 @@ confusionMatrix(testing$classe,pre)
 
 ## Prediction
 
-```{r}
+```{r, echo=FALSE}
 data2=read.csv("pml-testing.csv")
 ccc=as.vector(colnames(data))
 data3=data2[,colnames(data2)%in%ccc]
